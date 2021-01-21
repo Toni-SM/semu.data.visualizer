@@ -1,4 +1,4 @@
-display_name = "Visualizer (charts and images)"
+display_name = "Data visualization"
 
 [dependencies]
 "omni.kit.editor" = {}
