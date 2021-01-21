@@ -1,0 +1,7 @@
+display_name = "Visualizer (charts and images)"
+
+[dependencies]
+"omni.kit.editor" = {}
+
+[[python.modules]]
+name = "omni.add_on.visualizer"
