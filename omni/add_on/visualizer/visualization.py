@@ -48,7 +48,17 @@ class Figure():
     
     def is_instance(self, num):
         """
+        Identify if the current figure has the specified identifier
 
+        Parameters
+        ----------
+        num : int or str, optional
+            Unique identifier for the figure
+
+        Returns
+        -------
+        bool
+            True if the current figure has the specified identifier  
         """
         if num == None:
             return False
@@ -89,6 +99,18 @@ class Figure():
                 ui.ImageWithProvider(self._byte_provider)
         
     def _render(self, *args, plot_method="plot", **kwargs):
+        """
+        Render a matplotlib.pyplot method
+
+        Parameters
+        ----------
+        plot_method : str
+            Name of the matplotib.pyplot method
+        args: tuple
+            Positional arguments of the method to be called
+        kwargs: dict
+            Key-value arguments of the method to be called
+        """
         # create canvas
         fig = Matplotlib_Figure(figsize=self._figsize, dpi=self._dpi)
         canvas = Matplotlib_FigureCanvasAgg(fig)
@@ -162,8 +184,7 @@ class Visualization():
         Matplotlib and OpenCV like data visualizer
         """
         # TODO: release figures after close them
-        self._figures = [] 
-        pass
+        self._figures = []
 
     def figure(self, num=None, figsize=(6.4, 4.8), dpi=100.0, **kwargs):
         """
@@ -178,11 +199,16 @@ class Visualization():
             Width and height of the window in inches
         dpi: float
             Resolution of the figure in pixels-per-inch (called dpi to keep compatibility with matplotlib)
+        
+        Returns
+        -------
+        Figure
+            Instance of the created or existing figure
         """
         for fig in self._figures:
             if fig.is_instance(num):
                 return fig
-        fig = Figure(num, figsize, dpi)
+        fig = Figure(num, figsize, dpi, **kwargs)
         self._figures.append(fig)
         return fig
 
