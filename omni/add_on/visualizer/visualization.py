@@ -9,7 +9,7 @@ import omni.ui as ui
 
 
 class AbstactFigure():
-    def __init__(self, prefix, num=None, figsize=(6.4, 4.8), dpi=100.0, **kwargs):
+    def __init__(self, prefix, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
         """
         Base class for figures
 
@@ -24,9 +24,9 @@ class AbstactFigure():
             Unique identifier for the figure.
             If the parameter is not given, a new identifier is created based on the current system time
         figsize : tuple
-            Width and height of the window in inches
-        dpi: float
-            Resolution of the figure in pixels-per-inch (called dpi to keep compatibility with matplotlib)
+            Width and height of the window in arbitrary units
+        ppu: float
+            Pixels-per-unit conversion factor
         """
         # window name
         if num == None:
@@ -39,22 +39,22 @@ class AbstactFigure():
             raise Exception(f"Invalid identifier type for the figure: {str(type(num))}")
 
         self._num = num
-        self._dpi = dpi
+        self._ppu = ppu
         self._figsize = figsize
 
         # create window
         self._window = ui.Window(f"{prefix}: {self._num}",
-                                 width=int(self._figsize[0]*self._dpi), 
-                                 height=int(self._figsize[1]*self._dpi), 
+                                 width=int(self._figsize[0]*self._ppu), 
+                                 height=int(self._figsize[1]*self._ppu), 
                                  visible=True)
 
-    def is_instance(self, num):
+    def is_instance(self, num=None):
         """
         Identify if the current figure has the specified identifier
 
         Parameters
         ----------
-        num : int or str, optional
+        num : int, float or str (optional)
             Unique identifier for the figure
 
         Returns
@@ -68,21 +68,21 @@ class AbstactFigure():
 
 
 class Figure(AbstactFigure):
-    def __init__(self, num=None, figsize=(6.4, 4.8), dpi=100.0, **kwargs):
+    def __init__(self, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
         """
         Create Matplotlib and OpenCV based visualizations
 
         Parameters
         ----------
-        num : int or str, optional
+        num : int, float or str (optional)
             Unique identifier for the figure.
             If the parameter is not given, a new identifier is created based on the current system time
         figsize : tuple
-            Width and height of the window in inches
-        dpi: float
-            Resolution of the figure in pixels-per-inch (called dpi to keep compatibility with matplotlib)
+            Width and height of the window in arbitrary units
+        ppu: float
+            Pixels-per-unit conversion factor
         """
-        super().__init__("Figure", num, figsize, dpi, **kwargs)
+        super().__init__(prefix="Figure", num=num, figsize=figsize, ppu=ppu, **kwargs)
         self._byte_provider = None
         
     def imshow(self, winname, mat):
@@ -99,6 +99,7 @@ class Figure(AbstactFigure):
         mat : numpy.ndarray (dtype: uint8)
             Image to be shown
         """
+        # TODO: add support for 16-bit unsigned, 32-bit integer, 32-bit or 64-bit floating-point
         height, width = mat.shape[:2]
         
         # enabled visibility
@@ -133,7 +134,7 @@ class Figure(AbstactFigure):
             Key-value arguments of the method to be called
         """
         # create canvas
-        fig = Matplotlib_Figure(figsize=self._figsize, dpi=self._dpi)
+        fig = Matplotlib_Figure(figsize=self._figsize, dpi=self._ppu)
         canvas = Matplotlib_FigureCanvasAgg(fig)
         
         # plotting
@@ -200,7 +201,33 @@ class Figure(AbstactFigure):
 class NativeFigure(AbstactFigure):
 
     class NativePlot():
-        def __init__(self, title="", lines=1, colors=[], xlim=None, ylim=None, window_size=250, theme="light"):
+        def __init__(self, uid, title="", lines=1, colors=[], xlim=None, ylim=None, window_size=250, theme="light"):
+            """
+            Native plot
+
+            Parameters
+            ----------
+            uid : str
+                Unique identifier of the native plot
+            title: str
+                Title of the plot. The title will not display if empty
+            lines: int
+                Number of line plots to generate into the same frame
+            colors: list
+                Colors for each line plot.
+                The format of the colors follow the matplotlib.colors reference (https://matplotlib.org/api/colors_api)
+                If the number of colors is different from the number of lines, a preset number of colors will be selected
+            xlim: tuple (optional)
+                Limits of the X axis. Not implemented!
+            ylim: tuple (optional)
+                Limits of the Y axis (min, max)
+            window_size: int
+                Amount of data to be shown in the frame (the data is represented using a double-ended queue).
+                The data will be represented as an accumulative list if this parameter is less or equal than zero or None
+            theme : str ("light" or "dark")
+                Set the background color of the frame according to the selected mode: "light" or "dark"
+            """
+            self._uid = uid
             self._title = title
             self._lines = lines
             self._colors = colors
@@ -226,14 +253,34 @@ class NativeFigure(AbstactFigure):
             else:
                 self._colors = self._generate_lines_color(self._lines)            
 
-        def _generate_lines_color(self, amout, colors=None):
+        def _generate_lines_color(self, amount, colors=None):
+            """
+            Generate or format the colors according to the native interface
+
+            Parameters
+            ----------
+            amount: int
+                Number of requested colors
+            colors: list
+                List of matplotlib.colors formatted colors for each line plot
+
+            Returns
+            -------
+            list
+                Formatted native colors
+            """
             if not colors:
                 x11_css4_color_names = ['red', 'green', 'blue', 'orange', 'cyan', 'magenta', 'yellow', 'white', 'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'black', 'blanchedalmond', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'oldlace', 'olive', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'purple', 'rebeccapurple', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'whitesmoke', 'yellowgreen']
-                colors = x11_css4_color_names[:amout]
+                colors = x11_css4_color_names[:amount]
             colors = [matplotlib.colors.to_hex(color, keep_alpha=False).upper()[1:] for color in colors]
             return [int(f"0xFF{color[-2:]}{color[2:-2]}{color[:2]}", 0) for color in colors]
 
         def draw(self):
+            """
+            Overwrite and redraw the native plots
+
+            The plots must be redrawn because the ui.Frame widget allows to have one sub-widget only
+            """
             ylim = self._ylim
             if not ylim:
                 ylim = (-1, 1)
@@ -261,6 +308,16 @@ class NativeFigure(AbstactFigure):
             self._label_min = ui.Label(str(ylim[0]), width=0, alignment=ui.Alignment.LEFT_BOTTOM)
 
         def add_data(self, data):
+            """
+            Add a new data and show it
+
+            Parameters
+            ----------
+            data : int, float, numeric iterable object (list, tuple, numpy.ndarray, etc.)
+                Data to be added and shown.
+                The numeric iterable object must to have the same length of the number of lines plot defined.
+                If the data is a single number (int, float) only the first line will be updated
+            """
             # add new data
             if type(data) == int or type(data) == float:
                 self._plots_data[0].append(data)
@@ -281,6 +338,16 @@ class NativeFigure(AbstactFigure):
                 self._plots[i].set_data(*self._plots_data[i])
         
         def set_data(self, data):
+            """
+            Set a new completed subset of data for each line plot and show them
+
+            Parameters
+            ----------
+            data : collection of numeric iterable object (list, tuple, collections.queue, numpy.ndarray, etc.)
+                Data to be added and shown. Each subset of data will overwrite previous ones.
+                The numeric iterable object must to have the same length of the number of lines plot defined.
+                Each subset of data must to inlcude the .append(...) method (numpy.ndarray type will be converted to list automatically)
+            """
             # validate data
             if len(data) != self._lines:
                 raise Exception("Invalid data length")
@@ -303,41 +370,88 @@ class NativeFigure(AbstactFigure):
                     self._plots[i].scale_max = ylim[1]
                 self._plots[i].set_data(*self._plots_data[i])
     
-    def __init__(self, num=None, figsize=(6.4, 4.8), dpi=100.0, **kwargs):
+    def __init__(self, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
         """
         Create native Omniverse visualizations
 
         Parameters
         ----------
-        num : int or str, optional
+        num : int, float or str (optional)
             Unique identifier for the figure.
             If the parameter is not given, a new identifier is created based on the current system time
         figsize : tuple
-            Width and height of the window in inches
-        dpi: float
-            Resolution of the figure in pixels-per-inch (called dpi to keep compatibility with matplotlib)
+            Width and height of the window in arbitrary units
+        ppu: float
+            Pixels-per-unit conversion factor
         """
-        super().__init__("Native figure", num, figsize, dpi, **kwargs)
-        self._native_plots = {}
+        super().__init__(prefix="Native figure", num=num, figsize=figsize, ppu=ppu, **kwargs)
+        self._native_plots = []
 
-    def __getitem__(self, index):
-        return self._native_plots[index]
+    def __getitem__(self, uid):
+        """
+        Get an existing native plot selected by its unique identifier (uid)
 
-    def add_plot(self, title="", lines=1, colors=[], xlim=None, ylim=None, window_size=250, theme="light", id=None):
-        if not id:
-            id = str(datetime.datetime.today().time())
-        self._native_plots[id] = self.NativePlot(title=title, 
-                                                 lines=lines, colors=colors, 
-                                                 xlim=xlim, ylim=ylim, 
-                                                 window_size=window_size, 
-                                                 theme=theme)
+        Parameters
+        ----------
+        uid: str
+            Unique identifier
+
+        Returns
+        -------
+        NativePlot
+            Instance of the native plot with the specified uid or None
+        """
+        for plot in self._native_plots:
+            if plot._uid == uid:
+                return plot
+        return None
+
+    def add_plot(self, title="", lines=1, colors=[], xlim=None, ylim=None, window_size=250, theme="light", uid=None):
+        """
+        Add a new native plot
+
+        Parameters
+        ----------
+        title: str
+            Title of the plot. The title will not display if empty
+        lines: int
+            Number of line plots to generate into the same frame
+        colors: list
+            Colors for each line plot.
+            The format of the colors follow the matplotlib.colors reference (https://matplotlib.org/api/colors_api)
+            If the number of colors is different from the number of lines, a preset number of colors will be selected
+        xlim: tuple (optional)
+            Limits of the X axis. Not implemented!
+        ylim: tuple (optional)
+            Limits of the Y axis (min, max)
+        window_size: int
+            Amount of data to be shown in the frame (the data is represented using a double-ended queue).
+            The data will be represented as an accumulative list if this parameter is less or equal than zero or None
+        theme : str ("light" or "dark")
+            Set the background color of the frame according to the selected mode: "light" or "dark"
+        uid : str (optional)
+            Unique identifier of the native plot
+
+        Returns
+        -------
+        NativePlot
+            Instance of native plot created
+        """
+        if not uid:
+            uid = str(datetime.datetime.today().time())
+        self._native_plots.append(self.NativePlot(uid=uid,
+                                                  title=title, 
+                                                  lines=lines, colors=colors, 
+                                                  xlim=xlim, ylim=ylim, 
+                                                  window_size=window_size, 
+                                                  theme=theme))
         # draw ui
         with self._window.frame:
             with ui.VStack(height=0):
-                for k in self._native_plots:
-                    self._native_plots[k].draw()
+                for plot in self._native_plots:
+                    plot.draw()
                     ui.Spacer(height=15)
-        return self._native_plots[id]
+        return self._native_plots[-1]
 
 
 class Visualizer():
@@ -351,19 +465,19 @@ class Visualizer():
         self._figures = []
         self._native_figures = []
 
-    def figure(self, num=None, figsize=(6.4, 4.8), dpi=100.0, **kwargs):
+    def figure(self, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
         """
         Create a new figure or return an existing one
 
         Parameters
         ----------
-        num : int or str, optional
+        num : int, float or str (optional)
             Unique identifier for the figure.
             If the parameter is not given, a new identifier is created based on the current system time
         figsize : tuple
-            Width and height of the window in inches
-        dpi: float
-            Resolution of the figure in pixels-per-inch (called dpi to keep compatibility with matplotlib)
+            Width and height of the window in arbitrary units
+        ppu: float
+            Pixels-per-unit conversion factor
         
         Returns
         -------
@@ -373,33 +487,33 @@ class Visualizer():
         for fig in self._figures:
             if fig.is_instance(num):
                 return fig
-        fig = Figure(num, figsize, dpi, **kwargs)
+        fig = Figure(num, figsize, ppu, **kwargs)
         self._figures.append(fig)
         return fig
 
-    def native_figure(self, num=None, figsize=(6.4, 4.8), dpi=100.0, **kwargs):
+    def native_figure(self, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
         """
         Create a new native figure or return an existing one
 
         Parameters
         ----------
-        num : int or str, optional
+        num : int, float or str (optional)
             Unique identifier for the figure.
             If the parameter is not given, a new identifier is created based on the current system time
         figsize : tuple
-            Width and height of the window in inches
-        dpi: float
-            Resolution of the figure in pixels-per-inch (called dpi to keep compatibility with matplotlib)
+            Width and height of the window in arbitrary units
+        ppu: float
+            Pixels-per-unit conversion factor
         
         Returns
         -------
-        Figure
+        NativeFigure
             Instance of the created or existing native figure
         """
         for fig in self._native_figures:
             if fig.is_instance(num):
                 return fig
-        fig = NativeFigure(num, figsize, dpi, **kwargs)
+        fig = NativeFigure(num, figsize, ppu, **kwargs)
         self._native_figures.append(fig)
         return fig
 
