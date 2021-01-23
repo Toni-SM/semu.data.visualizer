@@ -1,8 +1,38 @@
+## Data visualizer for NVIDIA Omniverse Isaac Sim
 
+> This extension allows the graphic representation of data using **Matplotlib and OpenCV like interfaces** and **native Omniverse plots**
+
+<br>
+
+### Table of Contents
+
+- [Add the extension to NVIDIA Omniverse Issac Sim and enable it](#extension)
+- [Display an image in a window (OpenCV-like interface)](#visualizer-image)
+- [Generate and display a figure using the matplotlib.pyplot API (Matplotlib-like interface)](#visualizer-pyplot)
+- [Generate and display an Omniverse (native) figure](#visualizer-native)
+
+<br>
+
+<a name="extension"></a>
+### Add the extension to NVIDIA Omniverse Issac Sim and enable it
+
+1. Copy or clone this repository (keeping its name ```omni.add_on.visualizer```) to the next path: ```/isaac-sim/_build/linux-x86_64/release/exts```
+2. Enable the extension in the menu *Window > Extension Manager* under the same name
+3. Import the extension into any python code and use it...
+
+    ```
+    from omni.add_on.visualizer import _visualizer
+    ```
+
+<br>
+
+<a name="visualizer-image"></a>
 ### Display an image in a window (OpenCV-like interface)
 
 ---
-**```imshow(winname, mat) -> None```**
+**```_visualizer.imshow(winname, mat) -> None```**
+
+Displays an image in the specified window
 
 Parameters:
 - **winname** (str): name of the window
@@ -20,12 +50,12 @@ image = SyntheticDataHelper().get_rgb_numpy()
 _visualizer.imshow("window", image)
 ```
 
-<p align="center">
-  <img width="75%" src="https://user-images.githubusercontent.com/22400377/105614872-9174e200-5dcc-11eb-940c-198ec99688d2.png">
-</p>
+![imshow](https://user-images.githubusercontent.com/22400377/105614872-9174e200-5dcc-11eb-940c-198ec99688d2.png)
+
 <br>
 
-### Generate and display a figure using matplotlib.pyplot API (Matplotlib-like interface)
+<a name="visualizer-pyplot"></a>
+### Generate and display a figure using the matplotlib.pyplot API (Matplotlib-like interface)
 
 This extension allows the **single-line and easy generation and visualization** of the plotting functions described by the [matplotlib.pyplot](https://matplotlib.org/api/_as_gen/matplotlib.pyplot) API. 
 
@@ -53,9 +83,9 @@ _visualizer.plot(x, y, 'ro--')
 _visualizer.bar(x, y)
 ```
 
-<p align="center">
-  <img width="75%" src="https://user-images.githubusercontent.com/22400377/105614874-92a60f00-5dcc-11eb-8224-1b10222f1d6e.png">
-</p>
+![pyplot](https://user-images.githubusercontent.com/22400377/105614874-92a60f00-5dcc-11eb-8224-1b10222f1d6e.png)
+
+<br>
 
 Example (redraw the content of the current figure):
 
@@ -73,15 +103,17 @@ for i in range(3):
     figure.scatter(d[0,:], d[1,:], s=(d[2,:]*30)**2, c=d[3,:], alpha=0.5)
 ```
 
-<p align="center">
-  <img width="75%" src="https://user-images.githubusercontent.com/22400377/105614871-90dc4b80-5dcc-11eb-8eff-9dd79e1fcaf7.png">
-</p>
+![figure](https://user-images.githubusercontent.com/22400377/105614871-90dc4b80-5dcc-11eb-8eff-9dd79e1fcaf7.png)
+
 <br>
 
+<a name="visualizer-native"></a>
 ### Generate and display an Omniverse (native) figure
 
 ---
-**```native_figure(num, figsize, ppu) -> NativeFigure```**
+**```_visualizer.native_figure(num, figsize, ppu) -> NativeFigure```**
+
+Create a native figure  
 
 Parameters:
 - **num** (int, float, srt or None): unique identifier for the figure. If the parameter is not given, a new identifier is created based on the current system time -  default: None
@@ -90,6 +122,8 @@ Parameters:
 
 ---
 **```NativeFigure.add_plot(title, lines, colors, ylim, window_size, theme) -> NativePlot```**
+
+Add a new native plot to the current native figure
 
 Parameters:
 - **title** (str): title of the frame - default: ""
@@ -102,11 +136,15 @@ Parameters:
 ---
 **```NativePlot.add_data(data) -> None```**
 
+Add a new data to the current native plot and show it
+
 Parameters:
 - **data** (int, float or numeric iterable object: list, tuple, numpy.ndarray, etc.): Data to be added. The numeric iterable object must to have the same length of the number of lines plot defined. If the data is a single number (int, float) only the first line will be updated
 
 ---
 **```NativePlot.set_data(data) -> None```**
+
+Set a new completed subset of data (for each line plot) to the current native plot and show them
 
 Parameters:
 - **data** (collection of numeric iterable objects: list, tuple, collections.queue, numpy.ndarray, etc.): Data to be added. Each subset of data will overwrite previous ones. The numeric iterable object must to have the same length of the number of lines plot defined. Each subset of data must to implement the .append(...) method (numpy.ndarray type will be converted to list automatically)
@@ -134,7 +172,4 @@ for i in range(40):
     plot2.add_data(d)
 ```
 
-<p align="center">
-  <img width="75%" src="https://user-images.githubusercontent.com/22400377/105614868-9043b500-5dcc-11eb-8956-d2216d45d126.png">
-</p>
-<br>
+![native_figure](https://user-images.githubusercontent.com/22400377/105614868-9043b500-5dcc-11eb-8956-d2216d45d126.png)
