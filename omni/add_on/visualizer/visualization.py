@@ -418,8 +418,8 @@ class NativeFigure(AbstactFigure):
             Number of line plots to generate into the same frame
         colors: list
             Colors for each line plot.
-            The format of the colors follow the matplotlib.colors reference (https://matplotlib.org/api/colors_api)
-            If the number of colors is different from the number of lines, a preset number of colors will be selected
+            The format of the colors follows the matplotlib.colors reference (https://matplotlib.org/api/colors_api)
+            If the number of colors is different from the number of lines, a subset of predefined colors will be selected
         xlim: tuple (optional)
             Limits of the X axis. Not implemented!
         ylim: tuple (optional)
