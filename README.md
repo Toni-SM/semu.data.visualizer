@@ -20,7 +20,7 @@
 2. Enable the extension in the menu *Window > Extension Manager* under the same name
 3. Import the extension into any python code and use it...
 
-    ```
+    ```python
     from omni.add_on.visualizer import _visualizer
     ```
 
@@ -41,7 +41,7 @@ Parameters:
 ---
 Example:
 
-```
+```python
 from omni.add_on.visualizer import _visualizer
 from omni.isaac.synthetic_utils import SyntheticDataHelper
 
@@ -72,7 +72,7 @@ All supported functions **accept the same parameters** as their respective count
 ---
 Example (create a new figure each time):
 
-```
+```python
 from omni.add_on.visualizer import _visualizer
 import numpy as np
 
@@ -89,7 +89,7 @@ _visualizer.bar(x, y)
 
 Example (redraw the content of the current figure):
 
-```
+```python
 from omni.add_on.visualizer import _visualizer
 import numpy as np
 import time
@@ -152,7 +152,7 @@ Parameters:
 ---
 Example:
 
-```
+```python
 from omni.add_on.visualizer import _visualizer
 import numpy as np
 import time
