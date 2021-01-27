@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib
 from matplotlib.figure import Figure as Matplotlib_Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as Matplotlib_FigureCanvasAgg
+from mpl_toolkits.mplot3d import Axes3D
 
 import omni.ui as ui
 
@@ -14,7 +15,7 @@ class AbstactFigure():
         Base class for figures
 
         Based on matplotlib.figure.Figure
-        https://matplotlib.org/3.3.3/api/_as_gen/matplotlib.figure.Figure.html?highlight=figure#matplotlib.figure.Figure
+        https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure
 
         Parameters
         ----------
@@ -149,7 +150,7 @@ class Figure(AbstactFigure):
         self.imshow(None, img)
 
     # matplotib pyplot methods
-    # https://matplotlib.org/3.3.3/api/_as_gen/matplotlib.pyplot.html
+    # https://matplotlib.org/api/_as_gen/matplotlib.pyplot
     def acorr(self, *args, **kwargs): self._render(*args, plot_method="acorr", **kwargs)
     def angle_spectrum(self, *args, **kwargs): self._render(*args, plot_method="angle_spectrum", **kwargs)
     def bar(self, *args, **kwargs): self._render(*args, plot_method="bar", **kwargs)
@@ -196,6 +197,78 @@ class Figure(AbstactFigure):
     def triplot(self, *args, **kwargs): self._render(*args, plot_method="triplot", **kwargs)
     def violinplot(self, *args, **kwargs): self._render(*args, plot_method="violinplot", **kwargs)
     def vlines(self, *args, **kwargs): self._render(*args, plot_method="vlines", **kwargs)
+
+
+class Figure3D(AbstactFigure):
+    def __init__(self, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
+        """
+        Create Matplotlib (mplot3d) based visualizations
+
+        Parameters
+        ----------
+        num : int, float or str (optional)
+            Unique identifier for the figure.
+            If the parameter is not given, a new identifier is created based on the current system time
+        figsize : tuple
+            Width and height of the window in arbitrary units
+        ppu: float
+            Pixels-per-unit conversion factor
+        """
+        super().__init__(prefix="Figure3D", num=num, figsize=figsize, ppu=ppu, **kwargs)
+        self._byte_provider = None
+        
+    def _render(self, *args, plot_method="plot", **kwargs):
+        """
+        Render a mplot3d method
+
+        Parameters
+        ----------
+        plot_method : str
+            Name of the mplot3d method
+        args: tuple
+            Positional arguments of the method to be called
+        kwargs: dict
+            Key-value arguments of the method to be called
+        """
+        # create canvas
+        fig = Matplotlib_Figure(figsize=self._figsize, dpi=self._ppu)
+        canvas = Matplotlib_FigureCanvasAgg(fig)
+        
+        # plotting
+        ax = Axes3D(fig)
+        exec("ax.{}(*args, **kwargs)".format(plot_method))
+
+        # convert renderer buffer to numpy
+        canvas.draw()
+        img = np.asarray(canvas.buffer_rgba())
+        
+        # show rendered image
+        Figure.imshow(self, None, img)
+
+    # matplotib mplot3d methods
+    # https://matplotlib.org/tutorials/toolkits/mplot3d
+    def plot(self, *args, **kwargs): self._render(*args, plot_method="plot", **kwargs)
+    def scatter(self, *args, **kwargs): self._render(*args, plot_method="scatter", **kwargs)
+    def plot_wireframe(self, *args, **kwargs): self._render(*args, plot_method="plot_wireframe", **kwargs)
+    def plot_surface(self, *args, **kwargs): self._render(*args, plot_method="plot_surface", **kwargs)
+    def plot_trisurf(self, *args, **kwargs): self._render(*args, plot_method="plot_trisurf", **kwargs)
+    def contour(self, *args, **kwargs): self._render(*args, plot_method="contour", **kwargs)
+    def contourf(self, *args, **kwargs): self._render(*args, plot_method="contourf", **kwargs)
+    def add_collection3d(self, *args, **kwargs): self._render(*args, plot_method="add_collection3d", **kwargs)
+    def bar(self, *args, **kwargs): self._render(*args, plot_method="bar", **kwargs)
+    def quiver(self, *args, **kwargs): self._render(*args, plot_method="quiver", **kwargs)
+    def text(self, *args, **kwargs): self._render(*args, plot_method="text", **kwargs)
+
+    def plot3d(self, *args, **kwargs): self._render(*args, plot_method="plot", **kwargs)
+    def scatter3d(self, *args, **kwargs): self._render(*args, plot_method="scatter", **kwargs)
+    def plot_wireframe3d(self, *args, **kwargs): self._render(*args, plot_method="plot_wireframe", **kwargs)
+    def plot_surface3d(self, *args, **kwargs): self._render(*args, plot_method="plot_surface", **kwargs)
+    def plot_trisurf3d(self, *args, **kwargs): self._render(*args, plot_method="plot_trisurf", **kwargs)
+    def contour3d(self, *args, **kwargs): self._render(*args, plot_method="contour", **kwargs)
+    def contourf3d(self, *args, **kwargs): self._render(*args, plot_method="contourf", **kwargs)
+    def bar3d(self, *args, **kwargs): self._render(*args, plot_method="bar", **kwargs)
+    def quiver3d(self, *args, **kwargs): self._render(*args, plot_method="quiver", **kwargs)
+    def text3d(self, *args, **kwargs): self._render(*args, plot_method="text", **kwargs)
 
 
 class NativeFigure(AbstactFigure):
@@ -462,7 +535,9 @@ class Visualizer():
         Matplotlib and OpenCV like data visualizer
         """
         # TODO: release figures after close them
+        # TODO: close all figures by request: cv2.destroyWindow(), cv2.destroyAllWindows(), close(name), close('all')
         self._figures = []
+        self._figures3d = []
         self._native_figures = []
 
     def figure(self, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
@@ -489,6 +564,32 @@ class Visualizer():
                 return fig
         fig = Figure(num, figsize, ppu, **kwargs)
         self._figures.append(fig)
+        return fig
+
+    def figure3d(self, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
+        """
+        Create a new 3D figure or return an existing one
+
+        Parameters
+        ----------
+        num : int, float or str (optional)
+            Unique identifier for the 3D figure.
+            If the parameter is not given, a new identifier is created based on the current system time
+        figsize : tuple
+            Width and height of the window in arbitrary units
+        ppu: float
+            Pixels-per-unit conversion factor
+        
+        Returns
+        -------
+        Figure3D
+            Instance of the created or existing 3D figure
+        """
+        for fig in self._figures3d:
+            if fig.is_instance(num):
+                return fig
+        fig = Figure3D(num, figsize, ppu, **kwargs)
+        self._figures3d.append(fig)
         return fig
 
     def native_figure(self, num=None, figsize=(6.4, 4.8), ppu=100.0, **kwargs):
@@ -577,6 +678,19 @@ class Visualizer():
     def triplot(self, *args, **kwargs): self.figure(None).triplot(*args, **kwargs)
     def violinplot(self, *args, **kwargs): self.figure(None).violinplot(*args, **kwargs)
     def vlines(self, *args, **kwargs): self.figure(None).vlines(*args, **kwargs)
-    
+
+    # matplotib mplot3d methods
+    def plot3d(self, *args, **kwargs): self.figure3d(None).plot3d(*args, **kwargs)
+    def scatter3d(self, *args, **kwargs): self.figure3d(None).scatter3d(*args, **kwargs)
+    def plot_wireframe3d(self, *args, **kwargs): self.figure3d(None).plot_wireframe3d(*args, **kwargs)
+    def plot_surface3d(self, *args, **kwargs): self.figure3d(None).plot_surface3d(*args, **kwargs)
+    def plot_trisurf3d(self, *args, **kwargs): self.figure3d(None).plot_trisurf3d(*args, **kwargs)
+    def contour3d(self, *args, **kwargs): self.figure3d(None).contour3d(*args, **kwargs)
+    def contourf3d(self, *args, **kwargs): self.figure3d(None).contourf3d(*args, **kwargs)
+    def add_collection3d(self, *args, **kwargs): self.figure3d(None).add_collection3d(*args, **kwargs)
+    def bar3d(self, *args, **kwargs): self.figure3d(None).bar3d(*args, **kwargs)
+    def quiver3d(self, *args, **kwargs): self.figure3d(None).quiver3d(*args, **kwargs)
+    def text3d(self, *args, **kwargs): self.figure3d(None).text3d(*args, **kwargs)
+
 
 _visualizer = Visualizer()
