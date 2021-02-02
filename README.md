@@ -9,6 +9,7 @@
 - [Add the extension to NVIDIA Omniverse Issac Sim and enable it](#extension)
 - [Display an image in a window (OpenCV-like interface)](#visualizer-image)
 - [Generate and display a figure using the matplotlib.pyplot API (Matplotlib-like interface)](#visualizer-pyplot)
+- [Generate and display a 3D figure using the mplot3d Toolkit API (Matplotlib-like interface)](#visualizer-mplot3d)
 - [Generate and display an Omniverse (native) figure](#visualizer-native)
 
 <br>
@@ -57,17 +58,17 @@ _visualizer.imshow("window", image)
 <a name="visualizer-pyplot"></a>
 ### Generate and display a figure using the matplotlib.pyplot API (Matplotlib-like interface)
 
-This extension allows the **single-line and easy generation and visualization** of the plotting functions described by the [matplotlib.pyplot](https://matplotlib.org/api/_as_gen/matplotlib.pyplot) API. 
+This extension allows the **single-line and easy generation and visualization** of the plotting methods described by the [matplotlib.pyplot](https://matplotlib.org/api/_as_gen/matplotlib.pyplot) API
 
-Apart from the **most popular visualization functions** ([```plot```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot), [```scatter```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.scatter), [```bar```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.bar), [```pie```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.pie)), the following functions are supported: 
+Apart from the **most popular visualization methods** ([```plot```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot), [```scatter```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.scatter), [```bar```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.bar), [```pie```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.pie)), the following methods are supported: 
 
 [```acorr```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.acorr), [```angle_spectrum```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.angle_spectrum), [```barbs```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.barbs), [```barh```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.barh), [```boxplot```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.boxplot), [```broken_barh```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.broken_barh), [```cohere```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.cohere), [```contour```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.contour), [```contourf```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.contourf), [```csd```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.csd), [```errorbar```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.errorbar), [```eventplot```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.eventplot), [```fill```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.fill), [```fill_between```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.fill_between), [```fill_betweenx```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.fill_betweenx), [```hist```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.hist), [```hist2d```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.hist2d), [```hlines```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.hlines), [```loglog```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.loglog), [```magnitude_spectrum```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.magnitude_spectrum), [```matshow```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.matshow), [```pcolor```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.pcolor), [```pcolormesh```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.pcolormesh), [```phase_spectrum```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.phase_spectrum), [```plot_date```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot_date), [```polar```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.polar), [```psd```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.psd), [```quiver```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.quiver), [```semilogx```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.semilogx), [```semilogy```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.semilogy), [```specgram```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.specgram), [```spy```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.spy), [```stackplot```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.stackplot), [```stem```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.stem), [```step```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.step), [```streamplot```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.streamplot), [```tricontour```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.tricontour), [```tricontourf```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.tricontourf), [```tripcolor```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.tripcolor), [```triplot```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.triplot), [```violinplot```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.violinplot), [```vlines```](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.vlines)
 
-All these methods can be called directly from the main **```_visualizer```** object. In this case, the call will create a new figure each time. To create a figure and update its content use the **```_visualizer.figure```** method which returns a Figure object. Each plotting call, through this object, will update (redraw) the content of the figure
+All these methods could be called directly from the main **```_visualizer```** object. In this case, the call will create a new figure each time. To create a figure and update its content use the **```_visualizer.figure```** method which returns a Figure object. Each plotting call, through this object, will update (redraw) the content of the figure
 
 Parameters:
 
-All supported functions **accept the same parameters** as their respective counterparts described in the Matplotlib API reference and don't return anything. However, the generated figures are not interactive
+All supported methods **accept the same parameters** as their respective counterparts described in the Matplotlib API reference and don't return anything. However, the generated figures are not interactive
 
 ---
 Example (create a new figure each time):
@@ -104,6 +105,26 @@ for i in range(3):
 ```
 
 ![figure](https://user-images.githubusercontent.com/22400377/105614871-90dc4b80-5dcc-11eb-8eff-9dd79e1fcaf7.png)
+
+<br>
+
+<a name="visualizer-mplot3d"></a>
+### Generate and display a 3D figure using the mplot3d Toolkit API (Matplotlib-like interface)
+
+Also, this extension allows the **single-line and easy generation and visualization** of the 3D plotting methods described by the [Matplotlib mplot3d Toolkit](https://matplotlib.org/tutorials/toolkits/mplot3d) API
+
+The following methods are supported: [```plot3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#line-plots), [```scatter3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#scatter-plots), [```plot_wireframe3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#wireframe-plots), [```plot_surface3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#surface-plots), [```plot_trisurf3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#tri-surface-plots), [```contour3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#contour-plots), [```contourf3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#filled-contour-plots), [```add_collection3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#polygon-plots), [```bar3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#bar-plots), [```quiver3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#quiver), [```text3d```](https://matplotlib.org/tutorials/toolkits/mplot3d#text)
+
+All these methods could be called directly from the main **```_visualizer```** object. In this case, the call will create a new 3D figure each time. To create a 3D figure and update its content use the **```_visualizer.figure3d```** method which returns a Figure3D object. Each plotting call, through this object, will update (redraw) the content of the figure. **Note that the "-3d" suffix is added to the original API names**. This is needed to differentiate from the 2D matplotlib.pyplot names (however, it is possible to use the original name but only from an instance of Figure3D class returned by the **```_visualizer.figure3d```** method)
+
+Parameters:
+
+All supported methods **accept the same parameters** as their respective counterparts described in the Matplotlib API reference and don't return anything. However, the generated figures are not interactive
+
+---
+Example:
+
+<!-- TODO: add example and figure -->
 
 <br>
 
