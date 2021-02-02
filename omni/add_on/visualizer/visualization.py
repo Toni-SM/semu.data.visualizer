@@ -236,6 +236,25 @@ class Figure3D(AbstactFigure):
         
         # plotting
         ax = Axes3D(fig)
+
+        # aspect equal (experimental feature)
+        if "aspect" in kwargs:
+            if kwargs["aspect"] == "equal":
+                xs, ys, zs = np.array(args[0]), np.array(args[1]), np.array(args[2])
+
+                max_range = np.array([xs.max() - xs.min(), ys.max() - ys.min(), zs.max() - zs.min()]).max() / 2.0
+                
+                mid_x = (xs.max() + xs.min()) * 0.5
+                mid_y = (ys.max() + ys.min()) * 0.5
+                mid_z = (zs.max() + zs.min()) * 0.5
+                
+                ax.set_xlim(mid_x - max_range, mid_x + max_range)
+                ax.set_ylim(mid_y - max_range, mid_y + max_range)
+                ax.set_zlim(mid_z - max_range, mid_z + max_range)
+            
+            del kwargs["aspect"]
+        
+        # plot
         exec("ax.{}(*args, **kwargs)".format(plot_method))
 
         # convert renderer buffer to numpy
