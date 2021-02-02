@@ -121,10 +121,26 @@ Parameters:
 
 All supported methods **accept the same parameters** as their respective counterparts described in the Matplotlib API reference and don't return anything. However, the generated figures are not interactive
 
+Additionality, they accept an experimental parameter (```aspect="equal"```) designed to allow the same scaling from data to plot units (*"mplot3d Axes 3D does not currently support any aspect but 'auto' which fills the axes with the data limits"* according to the [reference](https://matplotlib.org/api/_as_gen/mpl_toolkits.mplot3d.axes3d.Axes3D.html#mpl_toolkits.mplot3d.axes3d.Axes3D.set_aspect))
+
 ---
 Example:
 
-<!-- TODO: add example and figure -->
+```python
+from omni.add_on.visualizer import _visualizer
+from omni.isaac.dynamic_control import _dynamic_control
+import numpy as np
+
+dci = _dynamic_control.acquire_dynamic_control_interface()
+ar = dci.get_articulation("/environments/Kuka/iiwa14")
+
+states = dci.get_articulation_body_states(ar, _dynamic_control.STATE_ALL)
+states = np.array([s[0][0].tolist() for s in states])[:-2,:]
+
+_visualizer.plot3d(states[:,0], states[:,1], states[:,2], 'o--', c='orange', aspect="equal")
+```
+
+![mplot3d](https://user-images.githubusercontent.com/22400377/106672085-cb559d80-65af-11eb-965c-e2baa1274b09.png)
 
 <br>
 
