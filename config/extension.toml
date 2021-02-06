@@ -1,7 +1,7 @@
-display_name = "Data visualization"
+display_name = "Data Visualizer (Plots and Images)"
 
 [dependencies]
-"omni.kit.editor" = {}
+"omni.ui" = {}
 
 [[python.modules]]
 name = "omni.add_on.visualizer"

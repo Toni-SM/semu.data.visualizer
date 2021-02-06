@@ -1,6 +1,6 @@
 import omni.ext
 
-EXTENSION_NAME = "Visualizer"
+EXTENSION_NAME = "Data Visualizer"
 
 
 class Extension(omni.ext.IExt):

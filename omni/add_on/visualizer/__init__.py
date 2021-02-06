@@ -1,4 +1,4 @@
 from .scripts.extension import *
-from . import visualization
+from . import visualizer
 
-_visualizer = visualization._visualizer
+_visualizer = visualizer._visualizer
