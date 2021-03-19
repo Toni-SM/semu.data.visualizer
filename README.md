@@ -18,6 +18,12 @@
 ### Add the extension to NVIDIA Omniverse Issac Sim and enable it
 
 1. Copy or clone this repository (keeping its name ```omni.add_on.visualizer```) to the next path: ```/isaac-sim/_build/linux-x86_64/release/exts```
+
+    ```
+    cd /isaac-sim/_build/linux-x86_64/release/exts
+    git clone https://github.com/Toni-SM/omni.add_on.visualizer.git omni.add_on.visualizer
+    ```
+
 2. Enable the extension in the menu *Window > Extension Manager* under the same name
 3. Import the extension into any python code and use it...
 
