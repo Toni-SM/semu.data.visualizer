@@ -140,6 +140,13 @@ class Figure(AbstactFigure):
         
         # plotting
         ax = fig.gca()
+
+        # aspect equal (experimental feature)
+        if "aspect" in kwargs:
+            if kwargs["aspect"] == "equal":
+                ax.set_aspect('equal')
+            del kwargs["aspect"]
+
         exec("ax.{}(*args, **kwargs)".format(plot_method))
 
         # convert renderer buffer to numpy
