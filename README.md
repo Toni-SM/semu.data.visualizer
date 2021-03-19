@@ -70,6 +70,8 @@ Parameters:
 
 All supported methods **accept the same parameters** as their respective counterparts described in the Matplotlib API reference and don't return anything. However, the generated figures are not interactive
 
+Additionality, they accept an experimental parameter (aspect="equal") designed to allow the same scaling from data to plot units
+
 ---
 Example (create a new figure each time):
 
