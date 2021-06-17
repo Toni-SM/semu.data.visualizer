@@ -1,7 +1,23 @@
-display_name = "Data Visualizer (Plots and Images)"
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.0.1"
+category = "Visualization"
+title = "Data Visualizer (Plots and Images)"
+description = "Data visualisation with Matplotlib and OpenCV-like interfaces and native Omniverse plots"
+authors = ["Toni-SM"]
+repository = ""
+keywords = ["data", "image", "plot"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+preview_image = "data/preview.png"
+icon = "data/icon.png"
 
 [dependencies]
 "omni.ui" = {}
+"omni.kit.pip_archive" = {} # pulls in numpy and matplotlib
 
-[[python.modules]]
+[[python.module]]
 name = "omni.add_on.visualizer"
