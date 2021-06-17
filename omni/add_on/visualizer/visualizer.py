@@ -1,12 +1,25 @@
 import datetime
 import collections
-import numpy as np
-import matplotlib
+
+import omni
+import omni.ui as ui
+
+try:
+    import numpy as np
+except ImportError:
+    print("numpy not found. attempting to install...")
+    omni.kit.pipapi.install("numpy")
+    import numpy as np
+try:
+    import matplotlib
+except ImportError:
+    print("matplotlib not found. attempting to install...")
+    omni.kit.pipapi.install("matplotlib")
+    import matplotlib
+
 from matplotlib.figure import Figure as Matplotlib_Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as Matplotlib_FigureCanvasAgg
 from mpl_toolkits.mplot3d import Axes3D
-
-import omni.ui as ui
 
 
 class AbstactFigure():
@@ -109,12 +122,12 @@ class Figure(AbstactFigure):
         
         # update if exist
         if self._byte_provider:
-            self._byte_provider.set_data(mat.flatten().tolist(), [width, height])
+            self._byte_provider.set_bytes_data(mat.flatten().tolist(), [width, height])
             return
         
         # create provider
         self._byte_provider = ui.ByteImageProvider()
-        self._byte_provider.set_data(mat.flatten().tolist(), [width, height])
+        self._byte_provider.set_bytes_data(mat.flatten().tolist(), [width, height])
         
         # create image viewer
         with self._window.frame:
