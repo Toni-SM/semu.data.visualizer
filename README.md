@@ -17,14 +17,14 @@
 <a name="extension"></a>
 ### Add the extension to NVIDIA Omniverse Issac Sim and enable it
 
-1. Copy or clone this repository (keeping its name ```omni.add_on.visualizer```) to the next path: ```/isaac-sim/_build/linux-x86_64/release/exts```
+1. Copy or clone this repository (keeping its name ```omni.add_on.visualizer```) to the next path: ```/isaac-sim/exts```
 
     ```
-    cd /isaac-sim/_build/linux-x86_64/release/exts
+    cd /isaac-sim/exts
     git clone https://github.com/Toni-SM/omni.add_on.visualizer.git omni.add_on.visualizer
     ```
 
-2. Enable the extension in the menu *Window > Extension Manager* under the same name
+2. Enable the extension in the menu *Window > Extensions* under the same name
 3. Import the extension into any python code and use it...
 
     ```python
@@ -49,12 +49,14 @@ Parameters:
 Example:
 
 ```python
+import omni
 from omni.add_on.visualizer import _visualizer
 from omni.isaac.synthetic_utils import SyntheticDataHelper
 
-image = SyntheticDataHelper().get_rgb_numpy()
+sd_helper = SyntheticDataHelper()
+gt = sd_helper.get_groundtruth(("rgb"), omni.kit.viewport.get_default_viewport_window())
 
-_visualizer.imshow("window", image)
+_visualizer.imshow("window", gt["rgb"])
 ```
 
 ![imshow](https://user-images.githubusercontent.com/22400377/105614872-9174e200-5dcc-11eb-940c-198ec99688d2.png)
