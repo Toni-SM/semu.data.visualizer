@@ -255,7 +255,8 @@ class Figure3D(AbstactFigure):
         canvas = Matplotlib_FigureCanvasAgg(fig)
         
         # plotting
-        ax = Axes3D(fig)
+        ax = Axes3D(fig, auto_add_to_figure=False)
+        fig.add_axes(ax)
 
         # aspect equal (experimental feature)
         if "aspect" in kwargs:
