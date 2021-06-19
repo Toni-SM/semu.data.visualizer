@@ -6,7 +6,7 @@
 
 ### Table of Contents
 
-- [Add the extension to NVIDIA Omniverse Issac Sim and enable it](#extension)
+- [Add the extension to NVIDIA Omniverse Isaac Sim and enable it](#extension)
 - [Display an image in a window (OpenCV-like interface)](#visualizer-image)
 - [Generate and display a figure using the matplotlib.pyplot API (Matplotlib-like interface)](#visualizer-pyplot)
 - [Generate and display a 3D figure using the mplot3d Toolkit API (Matplotlib-like interface)](#visualizer-mplot3d)
@@ -15,15 +15,9 @@
 <br>
 
 <a name="extension"></a>
-### Add the extension to NVIDIA Omniverse Issac Sim and enable it
+### Add the extension to NVIDIA Omniverse Isaac Sim and enable it
 
-1. Copy or clone this repository (keeping its name ```omni.add_on.visualizer```) to the next path: ```/isaac-sim/exts```
-
-    ```
-    cd /isaac-sim/exts
-    git clone https://github.com/Toni-SM/omni.add_on.visualizer.git omni.add_on.visualizer
-    ```
-
+1. Download the latest [release](https://github.com/Toni-SM/omni.add_on.visualizer/releases), or any release according to your Isaac Sim version, and unzip it into the Isaac Sim's extension path (```/isaac-sim/exts```)
 2. Enable the extension in the menu *Window > Extensions* under the same name
 3. Import the extension into any python code and use it...
 
