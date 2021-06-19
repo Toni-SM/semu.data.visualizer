@@ -731,6 +731,3 @@ class Visualizer():
     def bar3d(self, *args, **kwargs): self.figure3d(None).bar3d(*args, **kwargs)
     def quiver3d(self, *args, **kwargs): self.figure3d(None).quiver3d(*args, **kwargs)
     def text3d(self, *args, **kwargs): self.figure3d(None).text3d(*args, **kwargs)
-
-
-_visualizer = Visualizer()
