@@ -17,7 +17,11 @@ icon = "data/icon.png"
 
 [dependencies]
 "omni.ui" = {}
+"omni.kit.uiapp" = {}
 "omni.kit.pip_archive" = {} # pulls in numpy and matplotlib
 
 [[python.module]]
 name = "omni.add_on.visualizer"
+
+[[python.module]]
+name = "omni.add_on.visualizer.tests"
