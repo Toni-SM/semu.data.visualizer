@@ -1,8 +1,12 @@
 import omni.ext
-from .. import _visualizer as visualizer
+try:
+    from .. import _data_visualizer
+except:
+    print(">>>> [DEVELOPMENT] import data_visualizer")
+    from .. import data_visualizer as _data_visualizer
 
 __all__ = ["_visualizer"]
-_visualizer = visualizer.Visualizer()
+_visualizer = _data_visualizer.Visualizer()
 
 EXTENSION_NAME = "Data Visualizer"
 
