@@ -18,7 +18,7 @@ Data visualizer for NVIDIA Omniverse Isaac Sim (Matplotlib and OpenCV-like inter
 <a name="extension"></a>
 ### Add the extension to NVIDIA Omniverse Isaac Sim and enable it
 
-1. Download the latest [release](https://github.com/Toni-SM/omni.add_on.visualizer/releases), or any release according to your Isaac Sim version, and unzip it into the Isaac Sim's extension path (```/isaac-sim/exts```)
+1. Download the latest [release](https://github.com/Toni-SM/omni.add_on.visualizer/releases), or any release according to your Isaac Sim version, and unzip it into the Isaac Sim's extension path (```/isaac-sim/exts``` for containers or ```~/.local/share/ov/pkg/isaac_sim-2021.1.0/exts``` for native workstations)
 2. Enable the extension in the menu *Window > Extensions* under the same name
 3. Import the extension into any python code and use it...
 
@@ -45,13 +45,11 @@ Example:
 
 ```python
 import omni
+from omni.syntheticdata import sensors
 from omni.add_on.visualizer import _visualizer
-from omni.isaac.synthetic_utils import SyntheticDataHelper
 
-sd_helper = SyntheticDataHelper()
-gt = sd_helper.get_groundtruth(("rgb"), omni.kit.viewport.get_default_viewport_window())
-
-_visualizer.imshow("window", gt["rgb"])
+image = sensors.get_rgb(omni.kit.viewport.get_default_viewport_window())
+_visualizer.imshow("window", image)
 ```
 
 ![imshow](https://user-images.githubusercontent.com/22400377/105614872-9174e200-5dcc-11eb-940c-198ec99688d2.png)
