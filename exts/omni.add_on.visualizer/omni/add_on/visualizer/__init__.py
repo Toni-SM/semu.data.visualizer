@@ -1,1 +1,1 @@
-from .extension import *
+from .scripts.extension import *

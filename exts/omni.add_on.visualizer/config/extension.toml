@@ -1,28 +1,27 @@
+[core]
+reloadable = true
+order = 0
+
 [package]
-# Semantic Versionning is used: https://semver.org/
-version = "1.0.0"
+version = "0.0.2"
+category = "Other"
+title = "Data Visualizer (Plots and Images)"
+description = "Data visualization with Matplotlib and OpenCV-like interfaces and native Omniverse plots"
+authors = ["Toni-SM"]
+repository = "https://github.com/Toni-SM/omni.add_on.visualizer"
+keywords = ["data", "image", "plot"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+preview_image = "data/preview.png"
+icon = "data/icon.png"
 
-# The title and description fields are primarily for displaying extension info in UI
-title = "Simple UI Extension Template"
-description="The simplest python extension example. Use it as a starting point for your extensions."
-
-# Path (relative to the root) or content of readme markdown file for UI.
-readme  = "docs/README.md"
-
-# URL of the extension source repository.
-repository = ""
-
-# One of categories for UI.
-category = "Example"
-
-# Keywords for the extension
-keywords = ["kit", "example"]
-
-
-# Use omni.ui to build simple UI
 [dependencies]
+"omni.ui" = {}
 "omni.kit.uiapp" = {}
+"omni.kit.pip_archive" = {} # pulls in numpy and matplotlib
 
-# Main python module this extension provides, it will be publicly available as "import omni.hello.world".
 [[python.module]]
 name = "omni.add_on.visualizer"
+
+[[python.module]]
+name = "omni.add_on.visualizer.tests"
