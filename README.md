@@ -1,5 +1,6 @@
 # omni.add_on.visualizer
-Data visualizer for NVIDIA Omniverse Isaac Sim (Matplotlib and OpenCV-like interfaces and native plots)
+
+Data visualizer for NVIDIA Omniverse (Matplotlib and OpenCV-like interfaces and native Omniverse plots)
 
 > This extension (developed especially for headless containers and cloud deployments) allows the graphic representation of data using **Matplotlib and OpenCV-like interfaces** and **native Omniverse plots**
 
@@ -7,7 +8,7 @@ Data visualizer for NVIDIA Omniverse Isaac Sim (Matplotlib and OpenCV-like inter
 
 ### Table of Contents
 
-- [Add the extension to NVIDIA Omniverse Isaac Sim and enable it](#extension)
+- [Add the extension to a NVIDIA Omniverse app and enable it](#extension)
 - [Display an image in a window (OpenCV-like interface)](#visualizer-image)
 - [Generate and display a figure using the matplotlib.pyplot API (Matplotlib-like interface)](#visualizer-pyplot)
 - [Generate and display a 3D figure using the mplot3d Toolkit API (Matplotlib-like interface)](#visualizer-mplot3d)
@@ -16,10 +17,12 @@ Data visualizer for NVIDIA Omniverse Isaac Sim (Matplotlib and OpenCV-like inter
 <br>
 
 <a name="extension"></a>
-### Add the extension to NVIDIA Omniverse Isaac Sim and enable it
+### Add the extension to a NVIDIA Omniverse app and enable it
 
-1. Download the latest [release](https://github.com/Toni-SM/omni.add_on.visualizer/releases), or any release according to your Isaac Sim version, and unzip it into the Isaac Sim's extension path (```/isaac-sim/exts``` for containers or ```~/.local/share/ov/pkg/isaac_sim-2021.1.0/exts``` for native workstations)
-2. Enable the extension in the menu *Window > Extensions* under the same name
+1. Add the the extension by following the steps described in [Extension Search Paths](https://docs.omniverse.nvidia.com/py/kit/docs/guide/extensions.html#extension-search-paths)
+
+2. Enable the extension by following the steps described in [Extension Enabling/Disabling](https://docs.omniverse.nvidia.com/py/kit/docs/guide/extensions.html#extension-enabling-disabling)
+
 3. Import the extension into any python code and use it...
 
     ```python
