@@ -11,7 +11,7 @@ _visualizer = _data_visualizer.Visualizer()
 
 
 class Extension(omni.ext.IExt):
-    def on_startup(self):
+    def on_startup(self, ext_id):
         pass
 
     def on_shutdown(self):
