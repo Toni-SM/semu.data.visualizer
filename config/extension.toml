@@ -3,7 +3,7 @@ reloadable = true
 order = 0
 
 [package]
-version = "0.0.1"
+version = "0.1.0"
 category = "Other"
 title = "Data Visualizer (Plots and Images)"
 description = "Data visualisation with Matplotlib and OpenCV-like interfaces and native Omniverse plots"
@@ -18,7 +18,10 @@ icon = "data/icon.png"
 [dependencies]
 "omni.ui" = {}
 "omni.kit.uiapp" = {}
-"omni.kit.pip_archive" = {} # pulls in numpy and matplotlib
+"omni.kit.pipapi" = {}
+
+[python.pipapi]
+requirements = ["numpy", "matplotlib"]
 
 [[python.module]]
 name = "omni.add_on.visualizer"
