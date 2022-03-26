@@ -1,17 +1,15 @@
 import omni.ext
-try:
-    from .. import _visualizer as __visualizer
-except:
-    print(">>>> [DEVELOPMENT] import visualizer")
-    from .. import visualizer as __visualizer
 
-__all__ = ["_visualizer"]
-_visualizer = __visualizer.Visualizer()
+try:
+    from . import _backend
+except:
+    print(">>>> [DEVELOPMENT] import backend")
+    from . import backend as _backend
 
 
 class Extension(omni.ext.IExt):
     def on_startup(self, ext_id):
-        pass
+        self._interface = _backend.acquire_visualizer_interface(ext_id)
 
     def on_shutdown(self):
-        pass
+        _backend.release_visualizer_interface(self._interface)
