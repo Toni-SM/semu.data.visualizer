@@ -6,8 +6,6 @@
 
 # Application
 *.exe
-*.bat
-*.sh
 
 # Database files
 *.db3
