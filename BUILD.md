@@ -11,7 +11,7 @@ compile_extension.bat
 
 #### Troubleshooting
 
-**Cannot find -lvcruntime140: No such file or directory**
+* **Cannot find -lvcruntime140: No such file or directory**
 
     ```
     cannot find -lvcruntime140: No such file or directory
@@ -19,7 +19,7 @@ compile_extension.bat
 
     Find and copy `vcruntime140.dll` to `...mingw64\lib\`
 
-**Error: enumerator value for '__pyx_check_sizeof_voidp' is not an integer constant**
+* **Error: enumerator value for '__pyx_check_sizeof_voidp' is not an integer constant**
 
     ```
     error: enumerator value for '__pyx_check_sizeof_voidp' is not an integer constant
@@ -27,7 +27,7 @@ compile_extension.bat
 
     Add -DMS_WIN64 to the build command (Cython issue [#2670](https://github.com/cython/cython/issues/2670#issuecomment-432212671))
 
-**ValueError: Unknown MS Compiler version XXXX**
+* **ValueError: Unknown MS Compiler version XXXX**
 
     ```
     ValueError: Unknown MS Compiler version XXXX
