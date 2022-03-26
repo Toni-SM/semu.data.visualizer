@@ -38,6 +38,8 @@ def acquire_visualizer_interface(ext_id: str = "") -> dict:
     :returns: The interface
     :rtype: dict
     """
+    global _opencv_windows
+
     # add current path to sys.path to import the backend
     path = os.path.dirname(__file__)
     if path not in sys.path:
@@ -48,14 +50,17 @@ def acquire_visualizer_interface(ext_id: str = "") -> dict:
                  "opencv_imshow": cv2.imshow,
                  "opencv_waitKey": cv2.waitKey}
     
+    # set custom matplotlib backend
     if os.path.basename(__file__).startswith("_visualizer"):
         matplotlib.use("module://_visualizer")
     else:
         print(">>>> [DEVELOPMENT] module://visualizer")
         matplotlib.use("module://visualizer")
     
-    cv2.imshow = imshow
-    cv2.waitKey = waitKey
+    # set custom opencv methods
+    _opencv_windows = {}
+    cv2.imshow = _imshow
+    cv2.waitKey = _waitKey
 
     return interface
 
@@ -79,6 +84,11 @@ def release_visualizer_interface(interface: dict) -> None:
     except Exception as e:
         pass
 
+    # destroy all opencv windows
+    for window in _opencv_windows.values():
+        window.destroy()
+    _opencv_windows.clear()
+
     # remove current path from sys.path
     path = os.path.dirname(__file__)
     if path in sys.path:
@@ -87,7 +97,9 @@ def release_visualizer_interface(interface: dict) -> None:
 
 # opencv backend
 
-def imshow(winname: str, mat: np.ndarray) -> None:
+_opencv_windows = {}
+
+def _imshow(winname: str, mat: np.ndarray) -> None:
     """Show the image
 
     :param winname: The window name
@@ -95,9 +107,11 @@ def imshow(winname: str, mat: np.ndarray) -> None:
     :param mat: The image
     :type mat: np.ndarray
     """
-    print(">>>> [DEVELOPMENT] imshow")
+    if winname not in _opencv_windows:
+        _opencv_windows[winname] = FigureManager(None, winname)
+    _opencv_windows[winname].render_image(mat)
 
-def waitKey(delay: int = 0) -> int:
+def _waitKey(delay: int = 0) -> int:
     """Wait for a key press on the canvas
 
     :param delay: The delay in milliseconds
@@ -174,7 +188,8 @@ class FigureManagerOmniUi(FigureManagerBase):
         :param num: The figure number
         :type num: int
         """
-        super().__init__(canvas, num)
+        if canvas is not None:
+            super().__init__(canvas, num)
 
         self._window_title = "Figure {}".format(num) if type(num) is int else num
         self._byte_provider = None
@@ -227,7 +242,30 @@ class FigureManagerOmniUi(FigureManagerBase):
         # draw canvas and get figure
         self.canvas.draw()
         image = np.asarray(self.canvas.buffer_rgba())
+
+        # show figure
+        self.render_image(image=image, 
+                          figsize=(self.canvas.figure.get_figwidth(), self.canvas.figure.get_figheight()), 
+                          dpi=self.canvas.figure.get_dpi())
+
+    def render_image(self, image: np.ndarray, figsize: tuple = (6.4, 4.8), dpi: int = 100) -> None:
+        """Set and display the image in the window (inner function)
+
+        :param image: The image
+        :type image: np.ndarray
+        :param figsize: The figure size
+        :type figsize: tuple
+        :param dpi: The dpi
+        :type dpi: int
+        """
         height, width = image.shape[:2]
+
+        # convert image to 4-channel RGBA
+        if image.ndim == 2:
+            image = np.dstack((image, image, image, np.full((height, width, 1), 255, dtype=np.uint8)))
+        elif image.ndim == 3:
+            if image.shape[2] == 3:
+                image = np.dstack((image, np.full((height, width, 1), 255, dtype=np.uint8)))
 
         # enable the window visibility
         if self._window is not None and not self._window.visible:
@@ -236,19 +274,20 @@ class FigureManagerOmniUi(FigureManagerBase):
         # create the byte provider    
         if self._byte_provider is None:
             self._byte_provider = ui.ByteImageProvider()
-            self._byte_provider.set_bytes_data(image.flatten().tolist(), [width, height])
-            # create the window
-            if self._window is None:
-                self._window = ui.Window(self._window_title,
-                                         width=self.canvas.figure.get_figwidth() * self.canvas.figure.get_dpi(), 
-                                         height=self.canvas.figure.get_figheight() * self.canvas.figure.get_dpi(),
-                                         visible=True)
-                with self._window.frame:
-                    with ui.VStack():
-                        ui.ImageWithProvider(self._byte_provider)
+            self._byte_provider.set_bytes_data(image.flatten().data, [width, height])
         # update the byte provider
         else:
-            self._byte_provider.set_bytes_data(image.flatten().tolist(), [width, height])
+            self._byte_provider.set_bytes_data(image.flatten().data, [width, height])
+        
+        # create the window
+        if self._window is None:
+            self._window = ui.Window(self._window_title,
+                                     width=int(figsize[0] * dpi), 
+                                     height=int(figsize[1] * dpi),
+                                     visible=True)
+            with self._window.frame:
+                with ui.VStack():
+                    ui.ImageWithProvider(self._byte_provider)
 
 
 # provide the standard names that backend.__init__ is expecting
