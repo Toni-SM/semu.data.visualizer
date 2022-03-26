@@ -4,18 +4,8 @@ import collections
 import omni
 import omni.ui as ui
 
-try:
-    import numpy as np
-except ImportError:
-    print("numpy not found. attempting to install...")
-    omni.kit.pipapi.install("numpy")
-    import numpy as np
-try:
-    import matplotlib
-except ImportError:
-    print("matplotlib not found. attempting to install...")
-    omni.kit.pipapi.install("matplotlib")
-    import matplotlib
+import numpy as np
+import matplotlib
 
 from matplotlib.figure import Figure as Matplotlib_Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as Matplotlib_FigureCanvasAgg

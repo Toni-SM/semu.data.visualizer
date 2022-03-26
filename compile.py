@@ -11,8 +11,8 @@ if not os.path.exists(python_library_dir):
     python_library_dir = os.path.join("app", os.path.join("..", "..", "app", "kit", "python", "include"))
 
 ext_modules = [
-    Extension("_data_visualizer",
-              [os.path.join("omni", "add_on", "visualizer", "data_visualizer.py")],
+    Extension("_visualizer",
+              [os.path.join("omni", "add_on", "visualizer", "visualizer.py")],
               library_dirs=[python_library_dir]),
 ]
 
