@@ -1,0 +1,33 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.0"
+category = "Other"
+title = "Data Visualizer (Plots and Images)"
+description = "Switch Matplotlib and OpenCV backend to display graphics and images inside NVIDIA Omniverse apps"
+authors = ["Toni-SM"]
+repository = ""
+keywords = ["data", "image", "plot"]
+changelog = "docs/CHANGELOG.md"
+readme = "docs/README.md"
+preview_image = "data/preview.png"
+icon = "data/icon.png"
+
+[dependencies]
+"omni.ui" = {}
+"omni.kit.uiapp" = {}
+"omni.kit.pipapi" = {}
+
+[python.pipapi]
+requirements = ["numpy", "matplotlib", "opencv-python"]
+
+[[python.module]]
+name = "omni.add_on.visualizer"
+
+[[python.module]]
+name = "omni.add_on.visualizer.tests"
+
+[settings]
+exts."omni.add_on.visualizer".default_matplotlib_backend_if_agg = "Agg"
