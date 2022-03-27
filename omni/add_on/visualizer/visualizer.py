@@ -80,9 +80,10 @@ def release_visualizer_interface(interface: dict) -> None:
     """
     # restore default matplotlib backend
     try:
-        matplotlib.use(interface.get("matplotlib_backend", "Agg"))
+        matplotlib.use(interface.get("matplotlib_backend", \
+            carb.settings.get_settings().get("/exts/omni.add_on.visualizer/default_matplotlib_backend_if_agg")))
     except Exception as e:
-        pass
+        matplotlib.use("Agg")
     matplotlib.rcdefaults()
 
     # restore default opencv imshow
