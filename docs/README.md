@@ -1,9 +1,6 @@
-# Usage
+# omni.add_on.visualizer
 
-To enable this extension, go to the Extensions window and enable omni.add_on.visualizer extension. Visit https://github.com/Toni-SM/omni.add_on.visualizer for more details about how tu use this extension.
+This extension allows to switch Matplotlib and OpenCV backend to display graphics and images inside NVIDIA Omniverse apps without modifying the code logic
 
-* Import the extension into any python code and use it: 
+Visit https://github.com/Toni-SM/omni.add_on.visualizer to read more about its use
 
-```
-from omni.add_on.visualizer import _visualizer
-```

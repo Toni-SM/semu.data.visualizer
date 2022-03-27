@@ -13,6 +13,10 @@ This extension allows to switch [Matplotlib](https://matplotlib.org/) and [OpenC
 - [Extension setup](#setup)
 - [Extension usage](#usage)
 
+<br>
+
+![showcase](https://user-images.githubusercontent.com/22400377/160294178-9b463c7c-bcef-4748-94c1-ecc3467c1e62.png)
+
 <hr>
 
 <a name="setup"></a>

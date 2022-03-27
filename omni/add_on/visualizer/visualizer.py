@@ -1,6 +1,7 @@
 import os
 import sys
 
+import carb
 import omni
 import omni.ui as ui
 
@@ -45,8 +46,15 @@ def acquire_visualizer_interface(ext_id: str = "") -> dict:
     if path not in sys.path:
         sys.path.append(path)
 
+    # get matplotlib backend
     matplotlib_backend = matplotlib.get_backend()
-    interface = {"matplotlib_backend": matplotlib_backend if type(matplotlib_backend) is str else "Agg",
+    if type(matplotlib_backend) is str:
+        if matplotlib_backend.lower() == "agg":
+            matplotlib_backend = carb.settings.get_settings().get("/exts/omni.add_on.visualizer/default_matplotlib_backend_if_agg")
+    else:
+        matplotlib_backend = carb.settings.get_settings().get("/exts/omni.add_on.visualizer/default_matplotlib_backend_if_agg")
+
+    interface = {"matplotlib_backend": matplotlib_backend,
                  "opencv_imshow": cv2.imshow,
                  "opencv_waitKey": cv2.waitKey}
     
@@ -72,9 +80,10 @@ def release_visualizer_interface(interface: dict) -> None:
     """
     # restore default matplotlib backend
     try:
-        matplotlib.use(interface.get("matplotlib_backend", "Agg"))
+        matplotlib.use(interface.get("matplotlib_backend", \
+            carb.settings.get_settings().get("/exts/omni.add_on.visualizer/default_matplotlib_backend_if_agg")))
     except Exception as e:
-        pass
+        matplotlib.use("Agg")
     matplotlib.rcdefaults()
 
     # restore default opencv imshow
@@ -131,7 +140,7 @@ def draw_if_interactive():
     For GUI backends - this should be overridden if drawing should be done in
     interactive python mode.
     """
-    print(">>>> [DEVELOPMENT] draw_if_interactive")
+    pass
 
 def show(*, block: bool = None) -> None:
     """Show all figures and enter the main loop
