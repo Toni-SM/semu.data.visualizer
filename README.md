@@ -43,6 +43,6 @@ This extension allows to switch [Matplotlib](https://matplotlib.org/) and [OpenC
 
 **Enabling the extension** switches the Matplotlib and OpenCV backends **to display graphics and images in the Omniverse app**
 
-To revert the changes (display graphics and images in the default window outside an Omniverse app) it is only necessary to disable the extension
+Disabling the extension reverts the changes: graphics and images will be displayed in their respective windows by default, outside the Omniverse app
 
 > **Note:** The current implementation does not support interaction with the displayed graphics or images
