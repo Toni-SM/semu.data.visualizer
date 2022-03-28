@@ -3,10 +3,10 @@ reloadable = true
 order = 0
 
 [package]
-version = "0.0.2"
+version = "0.1.0"
 category = "Other"
 title = "Data Visualizer (Plots and Images)"
-description = "Data visualization with Matplotlib and OpenCV-like interfaces and native Omniverse plots"
+description = "Switch Matplotlib and OpenCV backend to display graphics and images inside NVIDIA Omniverse apps"
 authors = ["Toni-SM"]
 repository = "https://github.com/Toni-SM/omni.add_on.visualizer"
 keywords = ["data", "image", "plot"]
@@ -18,10 +18,16 @@ icon = "data/icon.png"
 [dependencies]
 "omni.ui" = {}
 "omni.kit.uiapp" = {}
-"omni.kit.pip_archive" = {} # pulls in numpy and matplotlib
+"omni.kit.pipapi" = {}
+
+[python.pipapi]
+requirements = ["numpy", "matplotlib", "opencv-python"]
 
 [[python.module]]
 name = "omni.add_on.visualizer"
 
 [[python.module]]
 name = "omni.add_on.visualizer.tests"
+
+[settings]
+exts."omni.add_on.visualizer".default_matplotlib_backend_if_agg = "Agg"

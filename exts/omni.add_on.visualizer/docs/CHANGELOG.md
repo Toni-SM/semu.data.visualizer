@@ -1,17 +1,16 @@
-**********
-CHANGELOG
-**********
+# Changelog
 
-[0.0.1] - 2021-06-18
-========================
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-Added
--------
-- update to Isaac Sim 2021.1.0
+## [0.1.0] - 2022-03-28
+### Changed
+- Rewrite the extension to implement a mechanism to change the Matplotlib 
+  and OpenCV backend to display graphics and images inside NVIDIA Omniverse apps
 
-[0.0.2] - 2021-10-06
-========================
+### Removed
+- Omniverse native plots
 
-Changed
--------
-- update folder structure to push to GitHub according to Omniverse extensions procedure
+## [0.0.1] - 2021-06-18
+### Added
+- Update extension to Isaac Sim 2021.1.0 extension format
+
