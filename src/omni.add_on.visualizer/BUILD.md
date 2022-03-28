@@ -1,10 +1,21 @@
 ## Building form source
 
+### Linux
+
+```bash
+cd src/omni.add_on.visualizer
+bash compile_extension.bash
+```
+
+### Windows (Microsoft Visual C++ (MSVC))
+
+We don't do that here!
+
 ### Windows (MinGW64)
 
 #### Build extension
 
-```bash
+```batch
 cd src\omni.add_on.visualizer
 compile_extension.bat
 ```
@@ -40,8 +51,9 @@ compile_extension.bat
 Get a fresh clone of the repository and follow the next steps
 
 ```bash
-# remove compiled files
-git filter-repo --invert-paths --path exts/omni.add_on.visualizer/omni/add_on/visualizer/_data_visualizer.cpython-37m-x86_64-linux-gnu.so
+# remove compiled files _visualizer.cpython-37m-x86_64-linux-gnu.so
+git filter-repo --invert-paths --path exts/omni.add_on.visualizer/omni/add_on/visualizer/_visualizer.cpython-37m-x86_64-linux-gnu.so
+git filter-repo --invert-paths --path exts/omni.add_on.visualizer/omni/add_on/visualizer/_visualizer.cp37-win_amd64.pyd
 
 # add origin
 git remote add origin git@github.com:Toni-SM/omni.add_on.visualizer.git
@@ -51,3 +63,9 @@ git push origin --force --all
 git push origin --force --tags
 ```
 
+## Packaging the extension
+
+```bash
+cd src/omni.add_on.visualizer
+bash package_extension.bash
+```
