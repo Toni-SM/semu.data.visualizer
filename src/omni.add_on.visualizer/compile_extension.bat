@@ -1,9 +1,11 @@
 
+SET OV_PYTHON_INTERPRETER=%USERPROFILE%\AppData\Local\ov\pkg\code-2022.1.0\kit\python\python.exe
+
 @REM delete old files
 CALL clean_extension
 
 @REM compile code
-..\..\app\kit\python\python.exe compile_extension.py build_ext --inplace --compiler=mingw32 -DMS_WIN64
+%OV_PYTHON_INTERPRETER% compile_extension.py build_ext --inplace --compiler=mingw32 -DMS_WIN64
 
 @REM move compiled files
 MOVE *.pyd omni\\add_on\\visualizer
