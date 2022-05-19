@@ -30,6 +30,12 @@ This extension allows to switch [Matplotlib](https://matplotlib.org/) and [OpenC
         git+https://github.com/Toni-SM/add_on.data.visualizer.git?branch=main&dir=exts
         ```
 
+        To install the source code version use the following url
+
+        ```
+        git+https://github.com/Toni-SM/add_on.data.visualizer.git?branch=main&dir=src
+        ```
+
     * Compressed (.zip) file for import
 
         [add_on.data.visualizer.zip](https://github.com/Toni-SM/add_on.data.visualizer/releases)
