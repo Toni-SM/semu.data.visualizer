@@ -27,12 +27,12 @@ This extension allows to switch [Matplotlib](https://matplotlib.org/) and [OpenC
     * Git url (git+https) as extension search path
     
         ```
-        git+https://github.com/Toni-SM/omni.add_on.visualizer.git?branch=main&dir=exts
+        git+https://github.com/Toni-SM/add_on.data.visualizer.git?branch=main&dir=exts
         ```
 
     * Compressed (.zip) file for import
 
-        [omni.add_on.visualizer.zip](https://github.com/Toni-SM/omni.add_on.visualizer/releases)
+        [add_on.data.visualizer.zip](https://github.com/Toni-SM/add_on.data.visualizer/releases)
 
 2. Enable the extension using the [Extension Manager](https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_extension-manager.html) or by following the steps in [Extension Enabling/Disabling](https://docs.omniverse.nvidia.com/py/kit/docs/guide/extensions.html#extension-enabling-disabling)
 
