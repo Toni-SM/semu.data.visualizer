@@ -8,6 +8,8 @@ This extension allows to switch [Matplotlib](https://matplotlib.org/) and [OpenC
 
 **Supported OS:** Windows and Linux 
 
+**Changelog:** [CHANGELOG.md](src/add_on.data.visualizer/docs/CHANGELOG.md)
+
 **Table of Contents:**
 
 - [Extension setup](#setup)
