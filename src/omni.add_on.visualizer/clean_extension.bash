@@ -3,5 +3,5 @@
 # delete old files
 rm -r build
 rm *.so
-rm omni/add_on/visualizer/*.c
-rm omni/add_on/visualizer/*.so
+rm add_on/data/visualizer/*.c
+rm add_on/data/visualizer/*.so

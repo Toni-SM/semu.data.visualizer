@@ -9,8 +9,8 @@ export LIBRARY_PATH=~/.local/share/ov/pkg/code-2022.1.0/kit/python/include
 ~/.local/share/ov/pkg/code-2022.1.0/kit/python/bin/python3 compile_extension.py build_ext --inplace
 
 # # move compiled file
-mv *.so omni/add_on/visualizer/
+mv *.so add_on/data/visualizer/
 
 # delete temporal data
 rm -r build
-rm omni/add_on/visualizer/*.c
+rm add_on/data/visualizer/*.c

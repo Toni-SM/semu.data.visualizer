@@ -16,12 +16,12 @@ if not os.path.exists(python_library_dir):
 
 ext_modules = [
     Extension("_visualizer",
-              [os.path.join("omni", "add_on", "visualizer", "visualizer.py")],
+              [os.path.join("add_on", "data", "visualizer", "visualizer.py")],
               library_dirs=[python_library_dir]),
 ]
 
 setup(
-    name = 'omni.add_on.visualizer',
+    name = 'add_on.data.visualizer',
     cmdclass = {'build_ext': build_ext},
     ext_modules = ext_modules
 )

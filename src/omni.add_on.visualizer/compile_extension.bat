@@ -8,8 +8,8 @@ CALL clean_extension
 %OV_PYTHON_INTERPRETER% compile_extension.py build_ext --inplace --compiler=mingw32 -DMS_WIN64
 
 @REM move compiled files
-MOVE *.pyd omni\\add_on\\visualizer
+MOVE *.pyd add_on\\data\\visualizer
 
 @REM delete temporal data
 RMDIR /S /Q build
-DEL /F /Q omni\\add_on\\visualizer\\*.c
+DEL /F /Q add_on\\data\\visualizer\\*.c

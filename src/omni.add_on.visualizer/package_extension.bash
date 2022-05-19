@@ -1,7 +1,7 @@
 #!/bin/bash
 
-extension_dir=../../exts/omni.add_on.visualizer
-extension_tree=omni/add_on/visualizer
+extension_dir=../../exts/add_on.data.visualizer
+extension_tree=add_on/data/visualizer
 
 # delete old files
 rm -r $extension_dir
