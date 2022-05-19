@@ -19,7 +19,7 @@ icon = "data/icon.png"
 
 [package.target]
 config = ["release"]
-platform = ["linux-*", "windows"]
+platform = ["linux-*", "windows-*"]
 python = ["*"]
 
 [dependencies]
