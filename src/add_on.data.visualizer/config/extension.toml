@@ -10,7 +10,7 @@ app = false
 title = "Data Visualizer (Plots and Images)"
 description = "Switch Matplotlib and OpenCV backend to display graphics and images inside NVIDIA Omniverse apps"
 authors = ["Toni-SM"]
-repository = "https://github.com/Toni-SM/add_on.data.visualizer"
+repository = "https://github.com/Toni-SM/semu.data.visualizer"
 keywords = ["data", "image", "plot"]
 changelog = "docs/CHANGELOG.md"
 readme = "docs/README.md"
@@ -31,10 +31,10 @@ python = ["*"]
 requirements = ["numpy", "matplotlib", "opencv-python"]
 
 [[python.module]]
-name = "add_on.data.visualizer"
+name = "semu.data.visualizer"
 
 [[python.module]]
-name = "add_on.data.visualizer.tests"
+name = "semu.data.visualizer.tests"
 
 [settings]
-exts."add_on.data.visualizer".default_matplotlib_backend_if_agg = "Agg"
+exts."semu.data.visualizer".default_matplotlib_backend_if_agg = "Agg"

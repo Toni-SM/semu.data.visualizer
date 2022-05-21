@@ -50,9 +50,9 @@ def acquire_visualizer_interface(ext_id: str = "") -> dict:
     matplotlib_backend = matplotlib.get_backend()
     if type(matplotlib_backend) is str:
         if matplotlib_backend.lower() == "agg":
-            matplotlib_backend = carb.settings.get_settings().get("/exts/add_on.data.visualizer/default_matplotlib_backend_if_agg")
+            matplotlib_backend = carb.settings.get_settings().get("/exts/semu.data.visualizer/default_matplotlib_backend_if_agg")
     else:
-        matplotlib_backend = carb.settings.get_settings().get("/exts/add_on.data.visualizer/default_matplotlib_backend_if_agg")
+        matplotlib_backend = carb.settings.get_settings().get("/exts/semu.data.visualizer/default_matplotlib_backend_if_agg")
 
     interface = {"matplotlib_backend": matplotlib_backend,
                  "opencv_imshow": cv2.imshow,
@@ -81,7 +81,7 @@ def release_visualizer_interface(interface: dict) -> None:
     # restore default matplotlib backend
     try:
         matplotlib.use(interface.get("matplotlib_backend", \
-            carb.settings.get_settings().get("/exts/add_on.data.visualizer/default_matplotlib_backend_if_agg")))
+            carb.settings.get_settings().get("/exts/semu.data.visualizer/default_matplotlib_backend_if_agg")))
     except Exception as e:
         matplotlib.use("Agg")
     matplotlib.rcdefaults()

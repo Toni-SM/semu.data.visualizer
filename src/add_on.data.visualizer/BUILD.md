@@ -3,7 +3,7 @@
 ### Linux
 
 ```bash
-cd src/add_on.data.visualizer
+cd src/semu.data.visualizer
 bash compile_extension.bash
 ```
 
@@ -16,7 +16,7 @@ We don't do that here!
 #### Build extension
 
 ```batch
-cd src\add_on.data.visualizer
+cd src\semu.data.visualizer
 compile_extension.bat
 ```
 
@@ -52,11 +52,11 @@ Get a fresh clone of the repository and follow the next steps
 
 ```bash
 # remove compiled files _visualizer.cpython-37m-x86_64-linux-gnu.so
-git filter-repo --invert-paths --path exts/add_on.data.visualizer/add_on/data/visualizer/_visualizer.cpython-37m-x86_64-linux-gnu.so
-git filter-repo --invert-paths --path exts/add_on.data.visualizer/add_on/data/visualizer/_visualizer.cp37-win_amd64.pyd
+git filter-repo --invert-paths --path exts/semu.data.visualizer/semu/data/visualizer/_visualizer.cpython-37m-x86_64-linux-gnu.so
+git filter-repo --invert-paths --path exts/semu.data.visualizer/semu/data/visualizer/_visualizer.cp37-win_amd64.pyd
 
 # add origin
-git remote add origin git@github.com:Toni-SM/add_on.data.visualizer.git
+git remote add origin git@github.com:Toni-SM/semu.data.visualizer.git
 
 # push changes
 git push origin --force --all
@@ -66,6 +66,6 @@ git push origin --force --tags
 ## Packaging the extension
 
 ```bash
-cd src/add_on.data.visualizer
+cd src/semu.data.visualizer
 bash package_extension.bash
 ```

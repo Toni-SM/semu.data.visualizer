@@ -16,12 +16,12 @@ if not os.path.exists(python_library_dir):
 
 ext_modules = [
     Extension("_visualizer",
-              [os.path.join("add_on", "data", "visualizer", "visualizer.py")],
+              [os.path.join("semu", "data", "visualizer", "visualizer.py")],
               library_dirs=[python_library_dir]),
 ]
 
 setup(
-    name = 'add_on.data.visualizer',
+    name = 'semu.data.visualizer',
     cmdclass = {'build_ext': build_ext},
     ext_modules = ext_modules
 )

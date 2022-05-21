@@ -8,7 +8,7 @@ This extension allows to switch [Matplotlib](https://matplotlib.org/) and [OpenC
 
 **Supported OS:** Windows and Linux 
 
-**Changelog:** [CHANGELOG.md](src/add_on.data.visualizer/docs/CHANGELOG.md)
+**Changelog:** [CHANGELOG.md](src/semu.data.visualizer/docs/CHANGELOG.md)
 
 **Table of Contents:**
 
@@ -29,18 +29,18 @@ This extension allows to switch [Matplotlib](https://matplotlib.org/) and [OpenC
     * Git url (git+https) as extension search path
     
         ```
-        git+https://github.com/Toni-SM/add_on.data.visualizer.git?branch=main&dir=exts
+        git+https://github.com/Toni-SM/semu.data.visualizer.git?branch=main&dir=exts
         ```
 
         To install the source code version use the following url
 
         ```
-        git+https://github.com/Toni-SM/add_on.data.visualizer.git?branch=main&dir=src
+        git+https://github.com/Toni-SM/semu.data.visualizer.git?branch=main&dir=src
         ```
 
     * Compressed (.zip) file for import
 
-        [add_on.data.visualizer.zip](https://github.com/Toni-SM/add_on.data.visualizer/releases)
+        [semu.data.visualizer.zip](https://github.com/Toni-SM/semu.data.visualizer/releases)
 
 2. Enable the extension using the [Extension Manager](https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_extension-manager.html) or by following the steps in [Extension Enabling/Disabling](https://docs.omniverse.nvidia.com/py/kit/docs/guide/extensions.html#extension-enabling-disabling)
 
