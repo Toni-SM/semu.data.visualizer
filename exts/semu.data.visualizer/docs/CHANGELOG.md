@@ -2,9 +2,9 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [0.2.0] - 2022-05-19
+## [0.2.0] - 2022-05-21
 ### Changed
-- Rename the extension to `add_on.data.visualizer`
+- Rename the extension to `semu.data.visualizer`
 
 ## [0.1.0] - 2022-03-28
 ### Added
